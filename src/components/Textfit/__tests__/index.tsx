@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import Textfit from '../'
 
 describe('<Textfit />', () => {
-  it('renders <Textfit /> with 4 slides', () => {
+  it('renders <Textfit />', () => {
     const wrapper = shallow((
       <span />
     ))

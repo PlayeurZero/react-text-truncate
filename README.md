@@ -1,6 +1,6 @@
 # React Textfit
 
-A React component that fit text using a number of lines.
+A React component that truncate text using a number of rows.
 
 ## Install
 
@@ -64,17 +64,24 @@ ReactDOM.render(
 
 The text that should be fitted.
 
-#### lines
+#### rows
 
 `number?` = `3`
 
-The number of lines before the text will be truncated.
+The number of rows before the text will be truncated.
 
 #### fallbackText
 
 `string?` = `"..."`
 
 The text to append to `text` if the content overflows the number of `lines`.
+
+#### renderFallback
+
+`React.ReactElement<any>?` = <span />
+
+A component to append in case where the text overflows.
+`fallbackText` is automatically added as prop `children` of `renderFallback`, so you should not put any children on this component.
 
 ## License
 

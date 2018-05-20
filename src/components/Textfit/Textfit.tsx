@@ -4,16 +4,20 @@ import { getFitText, getLineHeight, throttle } from '../../libraries/utils'
 
 interface IProps {
   text: string
-  lines?: number
+  rows?: number
+  renderFallback?: React.ReactElement<any>
   fallbackText?: string
 }
 
-interface IState {}
+interface IState {
+  text: string
+}
 
 class Textfit extends React.Component<IProps, IState> {
   public static defaultProps: Partial<IProps> = {
-    lines: 3,
+    rows: 3,
     fallbackText: '...',
+    renderFallback: <span />,
   }
 
   public lineHeight: number = null
@@ -21,6 +25,10 @@ class Textfit extends React.Component<IProps, IState> {
 
   constructor(props) {
     super(props)
+
+    this.state = {
+      text: props.text,
+    }
 
     this.$nodes = {
       wrapper: React.createRef(),
@@ -30,7 +38,7 @@ class Textfit extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
-    this.update()
+    this.updateSize()
 
     window.addEventListener('resize', this.handleResize)
   }
@@ -40,37 +48,41 @@ class Textfit extends React.Component<IProps, IState> {
   }
 
   public handleResize() {
-    this.forceUpdate()
+    this.updateSize()
   }
 
-  public componentDidUpdate() {
-    this.update()
-  }
-
-  public update() {
+  public updateSize() {
     if (null == this.lineHeight) {
       this.lineHeight = getLineHeight(this.$nodes.wrapper.current)
     }
 
-    this.$nodes.wrapper.current.innerText = this.props.text
-
     this.$nodes.wrapper.current.style.overflow = 'hidden'
     this.$nodes.wrapper.current.style.display = 'inline-block'
 
-    this.$nodes.wrapper.current.style.maxHeight = null
-    const fitText = getFitText(this.$nodes.wrapper.current, this.props.lines, this.lineHeight)
-    this.$nodes.wrapper.current.style.maxHeight = `${this.lineHeight * this.props.lines}px`
+    const text = getFitText(
+      this.$nodes.wrapper.current,
+      this.props.text,
+      this.props.rows,
+      this.lineHeight,
+      this.props.fallbackText,
+    )
 
-    if (fitText.length === this.props.text.length) {
-      this.$nodes.wrapper.current.innerText = fitText
-    } else {
-      this.$nodes.wrapper.current.innerHTML = `${fitText}${this.props.fallbackText}`
+    if (text.length !== this.props.text.length) {
+      this.setState({
+        text,
+      })
+    }
+  }
+
+  public renderFallback() {
+    if (this.state.text.length !== this.props.text.length) {
+      return React.cloneElement(this.props.renderFallback, {}, this.props.fallbackText)
     }
   }
 
   public render() {
     return (
-      <span ref={this.$nodes.wrapper} />
+      <span ref={this.$nodes.wrapper}>{this.state.text}{this.renderFallback()}</span>
     )
   }
 }

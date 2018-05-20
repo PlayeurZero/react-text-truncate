@@ -1,14 +1,18 @@
-export default function getFitText(node, lines = 1, lineHeight = 16, fallbackText = '') {
+export default function getFitText(node, text, rows, lineHeight = 16, fallbackText = '') {
   // if lineHeight < max height
-  const maxLineHeight = lineHeight * lines
+  const maxLineHeight = lineHeight * rows
 
-  if (node.offsetHeight <= maxLineHeight) {
-    return node.innerText
+  const clone = node.cloneNode()
+  node.parentNode.replaceChild(clone, node)
+
+  clone.innerText = text
+  clone.style.maxHeight = null
+
+  if (clone.offsetHeight <= maxLineHeight) {
+    clone.parentNode.replaceChild(node, clone)
+    return text
   }
 
-  const div = document.body.appendChild(document.createElement('div'))
-
-  const clone = div.appendChild(node.cloneNode(true))
   clone.style.maxHeight = `${maxLineHeight}px`
 
   let lastIndex
@@ -19,11 +23,13 @@ export default function getFitText(node, lines = 1, lineHeight = 16, fallbackTex
     if (lastIndex > -1) {
       clone.innerText = `${clone.innerText.substring(0, lastIndex)}${fallbackText}`
     } else {
-      div.parentNode.removeChild(div)
-      return null
+      clone.parentNode.replaceChild(clone, clone)
+      return ''
     }
   }
 
-  div.parentNode.removeChild(div)
-  return clone.innerText
+  const fitText =  clone.innerText.slice(0, -fallbackText.length)
+
+  clone.parentNode.replaceChild(node, clone)
+  return fitText
 }
