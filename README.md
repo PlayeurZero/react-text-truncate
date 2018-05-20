@@ -78,7 +78,7 @@ The text to append to `text` if the content overflows the number of `lines`.
 
 #### renderFallback
 
-`React.ReactElement<any>?` = <span />
+`React.ReactElement<any>?` = `<span />`
 
 A component to append in case where the text overflows.
 `fallbackText` is automatically added as prop `children` of `renderFallback`, so you should not put any children on this component.
