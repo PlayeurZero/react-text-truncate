@@ -8,15 +8,11 @@
 		"noImplicitAny": false,
 		"strictNullChecks": false
 	},
-	"files": [
-		"../typings/ObjectConstructor.d.ts",
-		"../typings/CSS.d.ts"
-	],
 	"include": [
-		"../src/**/*"
+		"src/**/*"
 	],
 	"exclude": [
-		"../node_modules/**/*",
-		"../**/__tests__/*"
+		"node_modules/**/*",
+		"**/__tests__/*"
 	]
 }

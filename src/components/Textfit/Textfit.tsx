@@ -7,6 +7,7 @@ interface IProps {
   rows?: number
   renderFallback?: React.ReactElement<any>
   fallbackText?: string
+  expanded?: boolean
 }
 
 interface IState {
@@ -18,6 +19,7 @@ class Textfit extends React.Component<IProps, IState> {
     rows: 3,
     fallbackText: '...',
     renderFallback: <span />,
+    expanded: false,
   }
 
   public lineHeight: number = null
@@ -47,6 +49,16 @@ class Textfit extends React.Component<IProps, IState> {
     window.removeEventListener('resize', this.handleResize)
   }
 
+  public componentWillReceiveProps(nextProps) {
+    if (nextProps.expanded !== this.props.expanded) {
+      if (nextProps.expanded) {
+        this.setState({ text: nextProps.text })
+      } else {
+        this.updateSize()
+      }
+    }
+  }
+
   public handleResize() {
     this.updateSize()
   }
@@ -59,13 +71,15 @@ class Textfit extends React.Component<IProps, IState> {
     this.$nodes.wrapper.current.style.overflow = 'hidden'
     this.$nodes.wrapper.current.style.display = 'inline-block'
 
-    const text = getFitText(
-      this.$nodes.wrapper.current,
-      this.props.text,
-      this.props.rows,
-      this.lineHeight,
-      this.props.fallbackText,
-    )
+    const text = this.props.expanded
+      ? this.props.text
+      : getFitText(
+        this.$nodes.wrapper.current,
+        this.props.text,
+        this.props.rows,
+        this.lineHeight,
+        this.props.fallbackText,
+      )
 
     if (text.length !== this.props.text.length) {
       this.setState({

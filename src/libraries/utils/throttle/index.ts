@@ -1,4 +1,4 @@
-export default function throttle(callback, delay, context = this) {
+export default function throttle(callback, delay, context = null) {
   let last
   let timer
 
