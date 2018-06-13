@@ -68,6 +68,11 @@ class Textfit extends React.Component<IProps, IState> {
       this.lineHeight = getLineHeight(this.$nodes.wrapper.current)
     }
 
+    // when testing, this.$nodes.wrapper can be undefined
+    if (null == this.lineHeight || null == this.$nodes.wrapper.current) {
+      return
+    }
+
     this.$nodes.wrapper.current.style.overflow = 'hidden'
     this.$nodes.wrapper.current.style.display = 'inline-block'
 

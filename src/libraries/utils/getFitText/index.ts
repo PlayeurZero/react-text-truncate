@@ -1,9 +1,19 @@
-export default function getFitText(node, text, rows, lineHeight = 16, fallbackText = '') {
+export default function getFitText(
+  node: HTMLElement,
+  text: string,
+  rows: number,
+  lineHeight: number = 16,
+  fallbackText: string = '',
+) {
+  if (!(node instanceof HTMLElement)) {
+    return null
+  }
+
   // if lineHeight < max height
   const maxLineHeight = lineHeight * rows
   const localFallbackText = fallbackText.replace(' ', '\u00a0')
 
-  const clone = node.cloneNode()
+  const clone = node.cloneNode() as HTMLElement
   node.parentNode.replaceChild(clone, node)
 
   clone.innerText = text
