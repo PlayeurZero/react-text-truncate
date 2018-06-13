@@ -1,4 +1,4 @@
-export default function throttle(callback, delay, context = null) {
+export default function throttle(callback, delay, thisArg = null) {
   let last
   let timer
 
@@ -10,11 +10,11 @@ export default function throttle(callback, delay, context = null) {
 
       timer = setTimeout(() => {
         last = now
-        callback.apply(context, ...args)
+        callback.apply(thisArg, ...args)
       }, delay)
     } else {
       last = now
-      callback.apply(context, ...args)
+      callback.apply(thisArg, ...args)
     }
   }
 }
