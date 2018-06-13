@@ -29,7 +29,8 @@ yarn add playeurzero/react-textfit#v1.0.0
 ```tsx
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as Textfit from 'react-textfit'
+
+import Textfit from 'react-textfit'
 
 ReactDOM.render(
   (
@@ -44,6 +45,7 @@ ReactDOM.render(
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
+
 import Textfit from 'react-textfit'
 
 ReactDOM.render(
@@ -69,6 +71,14 @@ The text that should be fitted.
 `number?` = `3`
 
 The number of rows before the text will be truncated.
+
+#### expanded
+
+`boolean?`
+
+Indicates if the text should be truncated.
+If set to true, the entire text will be shown.
+If set to false, the text will be truncated if needed.
 
 #### fallbackText
 
