@@ -36,7 +36,7 @@ class Textfit extends React.Component<IProps, IState> {
 
     this.state = {
       text: props.text,
-      previousText: null,
+      previousText: props.text,
     }
 
     this.$nodes = {
