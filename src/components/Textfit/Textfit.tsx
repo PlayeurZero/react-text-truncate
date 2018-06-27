@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { getFitText, getLineHeight, throttle } from '../../libraries/utils'
+let ReactSpring
 
 interface IProps {
   text: string
@@ -12,6 +13,7 @@ interface IProps {
 
 interface IState {
   text: string
+  previousText: string
 }
 
 class Textfit extends React.Component<IProps, IState> {
@@ -22,14 +24,19 @@ class Textfit extends React.Component<IProps, IState> {
     expanded: false,
   }
 
-  public lineHeight: number = null
-  public $nodes: any = {}
+  private lineHeight: number = null
+  private $nodes: any = {}
 
   constructor(props) {
     super(props)
 
+    import('react-spring').then((localReactSpring) => {
+      ReactSpring = localReactSpring
+    })
+
     this.state = {
       text: props.text,
+      previousText: null,
     }
 
     this.$nodes = {
@@ -52,9 +59,9 @@ class Textfit extends React.Component<IProps, IState> {
   public componentWillReceiveProps(nextProps) {
     if (nextProps.expanded !== this.props.expanded) {
       if (nextProps.expanded) {
-        this.setState({ text: nextProps.text })
+        this.setState({ text: nextProps.text, previousText: this.state.text })
       } else {
-        this.updateSize()
+        this.updateSize(false)
       }
     }
   }
@@ -63,7 +70,7 @@ class Textfit extends React.Component<IProps, IState> {
     this.updateSize()
   }
 
-  public updateSize() {
+  public updateSize(expanded = this.props.expanded) {
     if (null == this.lineHeight) {
       this.lineHeight = getLineHeight(this.$nodes.wrapper.current)
     }
@@ -76,7 +83,7 @@ class Textfit extends React.Component<IProps, IState> {
     this.$nodes.wrapper.current.style.overflow = 'hidden'
     this.$nodes.wrapper.current.style.display = 'inline-block'
 
-    const text = this.props.expanded
+    const text = expanded
       ? this.props.text
       : getFitText(
         this.$nodes.wrapper.current,
@@ -87,21 +94,46 @@ class Textfit extends React.Component<IProps, IState> {
       )
 
     if (text.length !== this.props.text.length) {
+      let previousText = ''
+
+      if (text.length === (this.state.previousText || { length: 0 }).length) {
+        previousText = this.state.previousText
+      }
+
       this.setState({
         text,
+        previousText,
       })
     }
   }
 
-  public renderFallback() {
-    if (this.state.text.length !== this.props.text.length) {
-      return React.cloneElement(this.props.renderFallback, {}, this.props.fallbackText)
-    }
-  }
-
   public render() {
+    const text = this.state.text
+
     return (
-      <span ref={this.$nodes.wrapper}>{this.state.text}{this.renderFallback()}</span>
+      <span ref={this.$nodes.wrapper}>
+        {this.state.previousText}
+        {ReactSpring
+          ? (
+            <ReactSpring.Transition
+              keys={this.state.text.length !== this.props.text.length}
+              from={{ transform: 'scaleY(0)' }}
+              enter={{ transform: 'scaleY(1)' }}
+              leave={{ transform: 'scaleY(0)' }}
+            >
+              {(styles) => (
+                <div
+                  style={{ ...styles, overflow: 'hidden', display: 'inline-block', transformOrigin: 'top center' }}
+                >
+                  {text.slice((this.state.previousText || { length: 0 }).length)}
+                </div>
+              )}
+            </ReactSpring.Transition>
+          )
+          : text
+        }
+        {this.state.text.length !== this.props.text.length && this.props.fallbackText}
+      </span>
     )
   }
 }
