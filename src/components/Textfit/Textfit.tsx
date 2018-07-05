@@ -113,6 +113,7 @@ class Textfit extends React.Component<IProps, IState> {
     return (
       <span ref={this.$nodes.wrapper}>
         {this.state.previousText}
+        {' '}
         {ReactSpring
           ? (
             <ReactSpring.Transition
@@ -123,7 +124,13 @@ class Textfit extends React.Component<IProps, IState> {
             >
               {(styles) => (
                 <div
-                  style={{ ...styles, overflow: 'hidden', display: 'inline-block', transformOrigin: 'top center' }}
+                  style={{
+                    ...styles,
+                    overflow: 'hidden',
+                    display: 'inline-block',
+                    transformOrigin: 'top center',
+                    verticalAlign: 'bottom',
+                  }}
                 >
                   {text.slice((this.state.previousText || { length: 0 }).length)}
                 </div>
@@ -132,7 +139,10 @@ class Textfit extends React.Component<IProps, IState> {
           )
           : text
         }
-        {this.state.text.length !== this.props.text.length && this.props.fallbackText}
+        {
+          this.state.text.length !== this.props.text.length &&
+          React.cloneElement(this.props.renderFallback, {}, this.props.fallbackText)
+        }
       </span>
     )
   }
