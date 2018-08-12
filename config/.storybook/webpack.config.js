@@ -7,7 +7,7 @@
 // to "React Create App". This only has babel loader to load JavaScript.
 
 const path = require('path')
-const PROJECT_DIRECTORY = path.resolve(__dirname, '..')
+const PROJECT_DIRECTORY = path.resolve(__dirname, '..', '..')
 
 module.exports = {
   plugins: [
@@ -26,6 +26,21 @@ module.exports = {
           },
         ],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              camelCase: false,
+              localIdentName: `__[local]`,
+            },
+          },
+        ],
       },
     ],
   },

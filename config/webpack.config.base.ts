@@ -2,7 +2,7 @@ import * as path from 'path'
 import * as webpack from 'webpack'
 import * as UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 
-const PROJECT_NAME = 'react-textfit'
+const PROJECT_NAME = 'react-text-truncate'
 const PROJECT_DIRECTORY = path.resolve(__dirname, '..')
 const SRC_DIRECTORY = path.resolve(PROJECT_DIRECTORY, 'src')
 const DIST_DIRECTORY = path.resolve(PROJECT_DIRECTORY, 'lib')
@@ -45,6 +45,29 @@ const config = (env): webpack.Configuration => ({
           },
         ],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              camelCase: false,
+              localIdentName: `${PROJECT_NAME}__[local]`,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              config: {
+                path: path.resolve(PROJECT_DIRECTORY, 'config', 'postcss.config.js'),
+              },
+            },
+          },
+        ],
       },
     ],
   },

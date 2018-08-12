@@ -1,1 +1,1 @@
-export * from './components/Textfit'
+export * from './components/TextTruncate'

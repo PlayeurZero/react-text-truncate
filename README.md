@@ -1,4 +1,4 @@
-# React Textfit
+# React TextTruncate
 
 A React component that truncate text using a number of rows.
 
@@ -7,20 +7,22 @@ A React component that truncate text using a number of rows.
 To install, run in a terminal&#x202f;:
 
 ```bash
-# using npm
-npm install --save playeurzero/react-textfit
-# using yarn
-yarn add playeurzero/react-textfit
+npm install --save playeurzero/react-text-truncate
 ```
 
 ### Install a specific version
 
 ```bash
-# using npm
-npm install --save playeurzero/react-textfit#v1.0.0
-# using yarn
-yarn add playeurzero/react-textfit#v1.0.0
+npm install --save playeurzero/react-text-truncate#v1.0.0
 ```
+
+## Demonstration
+
+```bash
+npm run storybook:run
+```
+
+Then open http://localhost:8000 in your favorite browser.
 
 ## Usage
 
@@ -30,11 +32,11 @@ yarn add playeurzero/react-textfit#v1.0.0
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import Textfit from 'react-textfit'
+import TextTruncate from 'react-text-truncate'
 
 ReactDOM.render(
   (
-    <Textfit text="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere praesentium, doloremque repudiandae soluta voluptatem, molestiae laboriosam, enim eaque laborum repellat perspiciatis. Maxime, debitis commodi. Explicabo doloribus laboriosam corporis at eaque." />
+    <TextTruncate text="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere praesentium, doloremque repudiandae soluta voluptatem, molestiae laboriosam, enim eaque laborum repellat perspiciatis. Maxime, debitis commodi. Explicabo doloribus laboriosam corporis at eaque." />
   ),
   document.querySelector('.app')
 )
@@ -46,11 +48,11 @@ ReactDOM.render(
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Textfit from 'react-textfit'
+import TextTruncate from 'react-text-truncate'
 
 ReactDOM.render(
   (
-    <Textfit text="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere praesentium, doloremque repudiandae soluta voluptatem, molestiae laboriosam, enim eaque laborum repellat perspiciatis. Maxime, debitis commodi. Explicabo doloribus laboriosam corporis at eaque." />
+    <TextTruncate text="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere praesentium, doloremque repudiandae soluta voluptatem, molestiae laboriosam, enim eaque laborum repellat perspiciatis. Maxime, debitis commodi. Explicabo doloribus laboriosam corporis at eaque." />
   ),
   document.querySelector('.app')
 )
@@ -58,7 +60,7 @@ ReactDOM.render(
 
 ## Description
 
-### \<Textfit> props
+### \<TextTruncate> props
 
 #### text
 
@@ -71,27 +73,6 @@ The text that should be fitted.
 `number?` = `3`
 
 The number of rows before the text will be truncated.
-
-#### expanded
-
-`boolean?`
-
-Indicates if the text should be truncated.
-If set to true, the entire text will be shown.
-If set to false, the text will be truncated if needed.
-
-#### fallbackText
-
-`string?` = `"..."`
-
-The text to append to `text` if the content overflows the number of `lines`.
-
-#### renderFallback
-
-`React.ReactElement<any>?` = `<span />`
-
-A component to append in case where the text overflows.
-`fallbackText` is automatically added as prop `children` of `renderFallback`, so you should not put any children on this component.
 
 ## License
 

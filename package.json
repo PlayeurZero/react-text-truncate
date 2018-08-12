@@ -1,5 +1,5 @@
 {
-  "name": "react-textfit",
+  "name": "react-text-truncate",
   "version": "0.3.1",
   "main": "lib/index.js",
   "files": [
@@ -18,8 +18,8 @@
     "lint": "npm run lint:ts",
     "lint:ts": "tslint --config ./config/tslint.json 'src/**/*.{ts,tsx}'",
     "fix:ts": "tslint --config ./config/tslint.json 'src/**/*.{ts,tsx}' --fix",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook:run": "start-storybook -c ./config/.storybook -p 8000",
+    "storybook:build": "build-storybook -c ./config/.storybook"
   },
   "dependencies": {},
   "devDependencies": {
@@ -38,16 +38,22 @@
     "babel-core": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "clean-webpack-plugin": "^0.1.18",
+    "css-loader": "^1.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "file-loader": "^1.1.6",
     "jest": "^22.1.4",
+    "postcss": "^7.0.2",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-import": "^12.0.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-url": "^8.0.0",
     "raw-loader": "^0.5.1",
     "react": "^16.2.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "react-dom": "^16.2.0",
-    "react-spring": "^5.3.18",
     "source-map-loader": "^0.2.3",
+    "style-loader": "^0.22.1",
     "ts-jest": "^22.4.6",
     "ts-loader": "^3.2.0",
     "ts-node": "^4.1.0",
@@ -62,7 +68,5 @@
   "peerDependencies": {
     "react": ">= 16.0.0"
   },
-  "optionalDependencies": {
-    "react-spring": "^5.3.18"
-  }
+  "optionalDependencies": {}
 }
