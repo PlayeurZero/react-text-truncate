@@ -74,6 +74,12 @@ The text that should be truncated.
 
 The number of rows before the text will be truncated.
 
+#### clamped
+
+`boolean?`
+
+Control if the text should be clamped or not
+
 ## License
 
 [MIT licensed](LICENSE)
