@@ -1,7 +1,12 @@
+# 0.4.0
+
+Rewrite all the core of the component
+`react-textfit` have been renamed to `react-text-truncate`
+
 # 0.1.0
 
-first release
+First release
 
 # 0.0.0
 
-React TextTruncate
+React Text Truncate
