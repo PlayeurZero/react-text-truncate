@@ -20,7 +20,7 @@ storiesOf('Data display/TextTruncate', module).add('basic usage', () => {
         'adipisicing elit. Sit sunt voluptates obcaecati! Ipsam soluta nam totam doloremque id neque, ' +
         'ipsum architecto, aut, quisquam eaque enim consequatur asperiores voluptates esse sunt?'
       }
-      rows={2}
+      rows={5}
       clamped={boolean('clamped', false)}
     />
   )

@@ -13,7 +13,6 @@ interface IProps {
 }
 
 interface IState {
-  text: string
   clamped: boolean
   ellipsisIndex: number
 }
@@ -56,7 +55,6 @@ class TextTruncate extends React.Component<IProps, IState> {
     super(props)
 
     this.state = {
-      text: props.text,
       clamped: false,
       ellipsisIndex: null,
     }
@@ -118,7 +116,6 @@ class TextTruncate extends React.Component<IProps, IState> {
 
     this.setState({
       clamped,
-      text: clamped ? units.slice(0, ellipsisIndex).join('') : this.props.text,
       ellipsisIndex,
     })
   }
@@ -185,12 +182,12 @@ class TextTruncate extends React.Component<IProps, IState> {
 
     return {
       ellipsisIndex: localUnits.length,
-      clamped: localUnits.length > -1,
+      clamped: true,
     }
   }
 
   private isClamped() {
-    return getFirstDefinedVar(this.props.clamped, this.state.clamped, false)
+    return getFirstDefinedVar(this.props.clamped && this.state.clamped, this.state.clamped)
   }
 
   public render() {
