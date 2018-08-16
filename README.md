@@ -66,7 +66,7 @@ ReactDOM.render(
 
 `string`
 
-The text that should be fitted.
+The text that should be truncated.
 
 #### rows
 
